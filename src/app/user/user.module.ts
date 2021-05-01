@@ -4,9 +4,7 @@ import { UserSwitchComponent } from './components/user-switch/user-switch.compon
 import { EffectsModule } from '@ngrx/effects';
 import { UsersEffects } from './store/users.effects';
 import { HttpClientModule } from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
-
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [UserSwitchComponent],

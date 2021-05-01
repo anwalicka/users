@@ -1,7 +1,8 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {User} from '../models/user.model';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { User } from '../models/user.model';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class UserApiService {
 
   getUsers(): Observable<User[]> {
     // use user.json file and httpService
-
-    return of([]);
+    return this.httpService.get<any>("../../../assets/user.json")
+      .pipe(map(resp => resp.userList));
   }
 }

@@ -4,7 +4,7 @@
   </div>
   <div class="col-4">
     <select class="form-control" [ngModel]="1" (ngModelChange)="selectUser($event)">
-      <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+      <option *ngFor="let user of users$ | async" [value]="user.id">{{ user.name }}</option>
     </select>
   </div>
 </div>
