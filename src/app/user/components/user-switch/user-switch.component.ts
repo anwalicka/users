@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../../models/user.model';
-import {UserService} from '../../services/user.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { User } from '../../models/user.model';
+import { switchUser } from '../../store/users.actions';
+import { selectUsers } from '../../store/users.selectors';
 
 @Component({
   selector: 'app-user-switch',
@@ -8,16 +11,19 @@ import {UserService} from '../../services/user.service';
   styleUrls: ['./user-switch.component.scss']
 })
 export class UserSwitchComponent implements OnInit {
-  users: User[];
+  users$: Observable<User[]>;
 
-  constructor(private userService: UserService) { }
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
-    this.userService.getUsers()
-      .subscribe((users) => this.users = users);
+    this.users$ = this._selectUsers();
   }
 
   selectUser(id: number): void {
-    this.userService.switchUser(id);
+    this.store.dispatch(switchUser({ id }));
+  }
+
+  private _selectUsers(): Observable<User[]> {
+    return  this.store.select(selectUsers);
   }
 }
