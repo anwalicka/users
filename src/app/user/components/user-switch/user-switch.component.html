@@ -2,9 +2,9 @@
   <div class="col-8">
     <h2>Header</h2>
   </div>
-  <div class="col-4">
+  <div *ngIf="users$ | async as users" class="col-4">
     <select class="form-control" [ngModel]="1" (ngModelChange)="selectUser($event)">
-      <option *ngFor="let user of users$ | async" [value]="user.id">{{ user.name }}</option>
+      <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
     </select>
   </div>
 </div>

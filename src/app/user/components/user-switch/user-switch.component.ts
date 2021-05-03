@@ -16,14 +16,14 @@ export class UserSwitchComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit(): void {
-    this.users$ = this._selectUsers();
+    this.users$ = this.selectUsers();
   }
 
   selectUser(id: number): void {
     this.store.dispatch(switchUser({ id }));
   }
 
-  private _selectUsers(): Observable<User[]> {
-    return  this.store.select(selectUsers);
+  private selectUsers(): Observable<User[]> {
+    return this.store.select(selectUsers);
   }
 }

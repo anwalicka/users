@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { loadList } from './list/store/list.actions';
 import { User } from './user/models/user.model';
 import { loadUsers } from './user/store/users.actions';
 import { selectCurrentUser } from './user/store/users.selectors';
@@ -10,13 +11,8 @@ import { selectCurrentUser } from './user/store/users.selectors';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
 
-  list: any[] = [
-    'listItem1',
-    'listItem2',
-    'listItem3',
-  ];
+export class AppComponent implements OnInit{
   currentUser$: Observable<User>;
 
   constructor(
@@ -25,10 +21,11 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.store.dispatch(loadUsers());
-    this.currentUser$ = this._selectCurrentUser();
+    this.store.dispatch(loadList());
+    this.currentUser$ = this.selectCurrentUser();
   }
 
-  private _selectCurrentUser(): Observable<User> {
+  private selectCurrentUser(): Observable<User> {
     return this.store.select(selectCurrentUser);
   }
 }

@@ -13,7 +13,7 @@ export const initialState: State = {
   currentUserId: 1
 };
 
-export const reducer = createReducer(
+export const userReducer = createReducer(
   initialState,
 
   on(UsersActions.loadUserSuccess, (state, { users }) => ({

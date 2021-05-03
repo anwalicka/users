@@ -1,0 +1,42 @@
+[
+    {
+        "userId": 1,
+        "list": [
+            {
+                "id": "1",
+                "title": "Title user A",
+                "content": "Content user A"
+            },
+            {
+                "id": "2",
+                "title": "Title user A",
+                "content": "Content user A"
+            },
+            {
+                "id": "3",
+                "title": "Title user A",
+                "content": "Content user A"
+            }
+        ]
+    },
+    {
+        "userId": 2,
+        "list": [
+            {
+                "id": "1",
+                "title": "Title user B",
+                "content": "Content user B"
+            },
+            {
+                "id": "2",
+                "title": "Title user B",
+                "content": "Content user B"
+            },
+            {
+                "id": "3",
+                "title": "Title user B",
+                "content": "Content user B"
+            }
+        ]
+    }
+]
