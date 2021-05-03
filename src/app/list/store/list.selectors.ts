@@ -7,13 +7,12 @@ export const selectUserstate = createFeatureSelector<fromLists.State>(
 );
 
 export const selectList = createSelector(
-    selectUserstate,
-    state => state.lists
-  );
+  selectUserstate,
+  state => state.lists
+);
 
-  export const selectCurrentUserList = createSelector(
-    selectUserstate,
-    (state: fromLists.State, props: { userId: number }) => 
-    Object.values(state.lists)
-      .find((element: IList) => element.userId === props.userId)?.list
-  )
+export const selectCurrentUserList = createSelector(
+  selectUserstate,
+  (state: fromLists.State, props: { userId: number }) =>
+    state.lists.find((element: IList) => element.userId === props.userId)?.list
+)
