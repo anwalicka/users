@@ -1,7 +1,5 @@
-<div class="container min-vw-100">
+<div *ngIf="currentUser$ | async as currentUser" class="container min-vw-100">
   <app-user-switch></app-user-switch>
-  <ng-container *ngIf="currentUser$ | async as currentUser">
-    <h2>Logged in as {{ currentUser.name }}</h2>
-  </ng-container>
-  <h3>list here</h3>
+  <h2>Logged in as {{ currentUser.name }}</h2>
+  <app-list [userId]="currentUser.id"></app-list>
 </div>
