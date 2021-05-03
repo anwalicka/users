@@ -1,0 +1,13 @@
+<h5 class="mt-5 d-flex justify-content-center">Add new item</h5>
+<form [formGroup]="formGroup">
+    <ng-container *ngFor="let input of formInputs">
+        <div class="mb-3">
+            <label for="{{input.for}}" class="form-label">{{input.labelName}}</label>
+            <input type="{{input.type}}" class="form-control" id="{{input.inputId}}" placeholder="{{input.placeholder}}"
+                [formControlName]="input.controlName">
+        </div>
+    </ng-container>
+    <div class="mt-3 d-flex flex-row-reverse">
+        <button type="button" class="btn btn-success mb-3" (click)="addItem()">Add</button>
+    </div>
+</form>
