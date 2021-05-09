@@ -1,9 +1,11 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
+import { element } from 'protractor';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { IListItem } from '../../models/list-item.model';
+import { ListService } from '../../services/list.service';
 import { selectCurrentUserList } from '../../store/list.selectors';
 
 @Component({
@@ -17,15 +19,17 @@ export class ListComponent implements OnChanges {
 
   list$: Observable<IListItem[]>;
   faSort = faSort;
+  lastId: Observable<number>;
 
   private subGuard$: Subject<void> = new Subject<void>();
 
   constructor(
-    private store: Store
+    private listService: ListService
   ) { }
 
   ngOnChanges(): void {
-    this.list$ = this.getList();
+    this.list$ = this.listService.getList(this.userId);
+    this.lastId = this.list$.pipe(map(d => Math.max(...d.map(element => element.id)) + 1));
   }
 
   ngOnDestroy(): void {
@@ -33,11 +37,7 @@ export class ListComponent implements OnChanges {
     this.subGuard$.complete();
   }
 
-  private getList(): Observable<IListItem[]> {
-    return this.store.select(state =>
-      selectCurrentUserList(state, { userId: this.userId }))
-      .pipe(
-        takeUntil(this.subGuard$)
-      );
+  deleteListItem(id: number): void {
+     this.listService.deleteItem(id, this.userId); 
   }
 }

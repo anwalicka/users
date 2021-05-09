@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { addListItem } from 'src/app/list/store/list.actions';
@@ -19,11 +19,10 @@ interface IFormInput {
 })
 export class AddListItemComponent implements OnInit {
   @Input() userId: number;
-
+  @Input() lastId: number;
   formInputs: IFormInput[] = [
-    { for: 'itemId', labelName: 'Id', inputId: 'itemId', type: 'text', placeholder: 'id', controlName: 'id' },
     { for: 'itemTitle', labelName: 'Title', inputId: 'itemTitle', type: 'text', placeholder: 'title', controlName: 'title' },
-    { for: 'itemContent', labelName: 'Content', inputId: 'itemTitle', type: 'text', placeholder: 'content', controlName: 'content' },
+    { for: 'itemContent', labelName: 'Content', inputId: 'itemContent', type: 'text', placeholder: 'content', controlName: 'content' },
   ];
   formGroup: FormGroup;
 
@@ -39,8 +38,12 @@ export class AddListItemComponent implements OnInit {
   }
 
   addItem(): void {
+    const addedValues = {
+      ...this.formGroup.value,
+      id: this.lastId
+    }
     this.store.dispatch(
-      addListItem({ list: { userId: this.userId, list: [this.formGroup.value] } }));
+      addListItem({ list: { userId: this.userId, list: [addedValues] } }));
     this.formGroup.reset();
   }
 
@@ -51,9 +54,8 @@ export class AddListItemComponent implements OnInit {
 
   private createForm(): FormGroup {
     return this.formBuilder.group({
-      id: new FormControl(''),
-      title: new FormControl(''),
-      content: new FormControl('')
+      title: new FormControl('', Validators.required),
+      content: new FormControl('', Validators.required)
     });
   }
 }

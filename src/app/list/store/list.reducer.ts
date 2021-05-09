@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { IList } from '../models/list-item.model';
-import { addListItem, loadListSuccess } from './list.actions';
+import { addListItem, deleteListItem, loadListSuccess } from './list.actions';
 
 export const listsFeatureKey = 'lists';
 
@@ -35,6 +35,20 @@ export const listReducer = createReducer(
           list: [
             ...state.lists.find(data => +data.userId === +list.userId).list,
             ...list.list
+          ]
+        }
+      ]
+    }
+  }),
+  on(deleteListItem, (state, { id, userId }) => {
+    return {
+      ...state,
+      lists: [
+        ...state.lists.filter(data => data.userId !== userId),
+        {
+          userId: userId,
+          list: [
+            ...state.lists.find(data => +data.userId === userId).list.filter(element => element.id !== id),
           ]
         }
       ]
